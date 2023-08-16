@@ -5,9 +5,5 @@
     <artifactId>java-study</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>javaIO</artifactId>
-  
-  <build>
-	  <finalName>JavaIO</finalName>
-  </build>
+  <artifactId>finaltest</artifactId>
 </project>
