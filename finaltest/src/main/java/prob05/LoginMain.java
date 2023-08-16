@@ -37,7 +37,7 @@ public class LoginMain {
 	
 	public static void login(List<User> users, User user ) throws UserNotFoundException,PasswordDismatchException{
 		if(users.contains(user)) { // 아이디 확인 여부 
-			// 유x저 id가 존재할 때
+			// 유저 id가 존재할 때
 			System.out.println("아이디 확인 완료.");
 			int login_success = 0;
 			for(int i = 0 ; i < users.size() ; i++) { //비밀번호가 맞을 때
