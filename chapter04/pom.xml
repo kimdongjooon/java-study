@@ -10,4 +10,11 @@
   <build>
 	  <finalName>chapter04</finalName>
   </build>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.poscodx</groupId>
+  		<artifactId>javaIO</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
