@@ -26,6 +26,7 @@
 		<module>javaIO</module>
 		<module>finaltest</module>
 		<module>network</module>
+		<module>practice00</module>
 	</modules>
 
 </project>
