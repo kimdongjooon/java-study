@@ -25,6 +25,7 @@
 		<module>member_manegement_program</module>
 		<module>javaIO</module>
 		<module>finaltest</module>
+		<module>network</module>
 	</modules>
 
 </project>
