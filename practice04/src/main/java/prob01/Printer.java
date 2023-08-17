@@ -19,10 +19,15 @@ public class Printer {
 //		System.out.println(str);
 //	}
 	
-	// 제너릭으로 사용하기 
+	// 제너릭으로 사용하기 - 밑의 오브젝트로 구현한 메소드와 동일함 그래서 같이선언불가. 
 	public <T> void println(T t) {
 		System.out.println(t);
 	}
+	
+	// 오브젝트로 사용하기  
+//	public void println(Object o) {
+//		System.out.println(o);
+//	}
 	
 	public <T> void println(T... ts) {
 		for (T t : ts) {
@@ -30,11 +35,6 @@ public class Printer {
 		}
 		
 	}
-	
-	// 오브젝트로 사용하기  
-//	public void println(Object o) {
-//		System.out.println(o);
-//	}
 	
 	// 가변 파라미터 
 	public int sum(Integer... nums) {
