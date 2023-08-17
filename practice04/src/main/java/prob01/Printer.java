@@ -24,8 +24,24 @@ public class Printer {
 		System.out.println(t);
 	}
 	
+	public <T> void println(T... ts) {
+		for (T t : ts) {
+			System.out.println(t);
+		}
+		
+	}
+	
 	// 오브젝트로 사용하기  
 //	public void println(Object o) {
 //		System.out.println(o);
 //	}
+	
+	// 가변 파라미터 
+	public int sum(Integer... nums) {
+		int s =0;
+		for(Integer i : nums) {
+			s +=i;
+		}
+		return s;
+	}
 }
