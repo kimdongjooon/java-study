@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class EchoClient {
 	
-	private static final String SERVER_IP = "192.168.0.128";
+	private static final String SERVER_IP = "192.168.0.148";
 	
 	public static void main(String[] args) {
 		Socket socket = null;
@@ -23,7 +23,7 @@ public class EchoClient {
 			socket = new Socket();
 			
 			// 2. 서버 연결.			
-			socket.connect(new InetSocketAddress(SERVER_IP,EchoServer.PORT));
+			socket.connect(new InetSocketAddress(SERVER_IP,8001));
 			log("connected");
 			
 			// 3. io stream 받아오기
