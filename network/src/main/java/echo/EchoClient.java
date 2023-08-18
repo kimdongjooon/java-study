@@ -23,7 +23,7 @@ public class EchoClient {
 			socket = new Socket();
 			
 			// 2. 서버 연결.			
-			socket.connect(new InetSocketAddress(SERVER_IP,8001));
+			socket.connect(new InetSocketAddress(SERVER_IP,8002));
 			log("connected");
 			
 			// 3. io stream 받아오기
