@@ -9,67 +9,90 @@ import java.net.Socket;
 
 public class RequestHandler extends Thread {
 	private Socket socket;
-	
-	public RequestHandler( Socket socket ) {
+
+	public RequestHandler(Socket socket) {
 		this.socket = socket;
 	}
-	
+
 	@Override
 	public void run() {
 		try {
+			// logging Remote Host IP Address & Port
+			InetSocketAddress inetSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
+			log("connected from " + inetSocketAddress.getAddress().getHostAddress() + ":"
+					+ inetSocketAddress.getPort());
+
 			// get IOStream
 			OutputStream outputStream = socket.getOutputStream();
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
-			
+
 			String request = null;
-			while(true) {
+			while (true) {
 				String line = br.readLine();
-				
+
 				// 브라우저가 연결을 끊음.
-				if(line == null) {
+				if (line == null) {
 					break;
 				}
+
+//				// SimpleHTttpServer는 요청에 헤더만 처리한다.
+//				if("".equals(line)) {
+//					break;
+//				}
 				
-				// SimpleHTttpServer는 요청에 헤더만 처리한다.
-				if("".equals(line)) {
+				if(request == null ) {
+					request = line;
 					break;
 				}
-				
-				// 요청 헤더의 첫번째 라인만 읽음.
+//				
+//				// 요청 헤더의 첫번째 라인만 읽음.
 				log(line);
-				
+
 			}
-			
+
 			log(request);
 			
-			// logging Remote Host IP Address & Port
-			InetSocketAddress inetSocketAddress = ( InetSocketAddress )socket.getRemoteSocketAddress();
-			log( "connected from " + inetSocketAddress.getAddress().getHostAddress() + ":" + inetSocketAddress.getPort() );
+			String[] tokens = request.split(" "); //무조건 공백으로 때내기
+			if("GET".equals(tokens[0])) {
+				responseStaticResorce(outputStream, tokens[1], tokens[2]);
+			}else {
+				//methods: POST, PUT, DELETE,HEAD, CONNECT
+				// SimpleHttpServer에서는 무시(400 Bad Request 보낼예정)
+				
+//				responseStatic400Error(outputStream,tokens[2]);
+			}
 			
-					
 			// 예제 응답입니다.
 			// 서버 시작과 테스트를 마친 후, 주석 처리 합니다.
-			outputStream.write( "HTTP/1.1 200 OK\r\n".getBytes( "UTF-8" ) );
-			outputStream.write( "Content-Type:text/html; charset=utf-8\r\n".getBytes( "UTF-8" ) );
-			outputStream.write( "\r\n".getBytes() );
-			outputStream.write( "<h1>이 페이지가 잘 보이면 실습과제 SimpleHttpServer를 시작할 준비가 된 것입니다.</h1>".getBytes( "UTF-8" ) );
+			outputStream.write("HTTP/1.1 200 OK\r\n".getBytes("UTF-8"));
+			outputStream.write("Content-Type:text/html; charset=utf-8\r\n".getBytes("UTF-8"));
+			outputStream.write("\r\n".getBytes());
+			outputStream.write("<h1>이 페이지가 잘 보이면 실습과제 SimpleHttpServer를 시작할 준비가 된 것입니다.</h1>".getBytes("UTF-8"));
 
-		} catch( Exception ex ) {
-			log( "error:" + ex );
+		} catch (Exception ex) {
+			log("error:" + ex);
 		} finally {
 			// clean-up
-			try{
-				if( socket != null && socket.isClosed() == false ) {
+			try {
+				if (socket != null && socket.isClosed() == false) {
 					socket.close();
 				}
-				
-			} catch( IOException ex ) {
-				log( "error:" + ex );
+
+			} catch (IOException ex) {
+				log("error:" + ex);
 			}
-		}			
+		}
+	}
+
+	private void responseStaticResorce(
+			OutputStream outputStream, 
+			String url, 
+			String protocol) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void log(String message) {
-		System.out.println("[HttpServer#"+ getId() + "] " + message);
+		System.out.println("[HttpServer#" + getId() + "] " + message);
 	}
 }

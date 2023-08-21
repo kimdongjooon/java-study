@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class SimpleHttpServer {
-	private static final int PORT = 8001;
+	private static final int PORT = 8002;
 
 	public static void main(String[] args) {
 
