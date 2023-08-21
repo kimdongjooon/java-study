@@ -26,11 +26,12 @@ public class ChatClientThread extends Thread {
 			while(true) {
 				String m = br.readLine();
 				if("quit".equals(m)) {
+					System.out.println("프로그램을 종료합니다.");
 					break;
 				}
 				String[] tokens = m.split(":");
 				if(nickname.equals(tokens[0])) {
-//					System.out.println(tokens[1]);
+					System.out.println(tokens[1]);
 				}
 				else if(tokens.length==2 && nickname != tokens[0]) {
 					System.out.println(tokens[0]+" : "+tokens[1]);
