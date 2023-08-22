@@ -45,7 +45,12 @@ public class ChatClient {
 			// 7. 키보드 입력 처리
 			while(true) {
 				System.out.print(">> ");
+				
 				String input = scanner.nextLine();
+				if(input.split(":").length>=2) {
+					System.out.println(":를 두번 쓰지마세요.");
+					continue;
+				}
 				
 				// 그만두기.
 				if("quit".equals(input) == true) {
