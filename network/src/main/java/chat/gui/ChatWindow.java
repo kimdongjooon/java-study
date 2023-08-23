@@ -20,7 +20,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -117,7 +116,7 @@ public class ChatWindow {
 			pw.println("join:"+userName);
 		
 //			String name = br.readLine();
-			new ChatClientThread(br, roomName,userName).start();
+			new ChatClientThread(br, userName).start();
 
 		} catch (IOException e1) {
 
@@ -158,18 +157,18 @@ public class ChatWindow {
 
 	}
 
-	private void sendMessage(String roomName) { // 빈 문자는 보내지말기.
-		String message = textField.getText();
-		System.out.println("메세지를 보내는 프로토콜 구현: " + message);
-
-		textField.setText("");
-		textField.requestFocus();
-
-		// chatClientThread 에서 서버로 부터 받은 메세지가 있다고 치고
-
-		updateTextArea(userName + ": " + message);
-
-	}
+//	private void sendMessage(String roomName) { // 빈 문자는 보내지말기.
+//		String message = textField.getText();
+//		System.out.println("메세지를 보내는 프로토콜 구현: " + message);
+//
+//		textField.setText("");
+//		textField.requestFocus();
+//
+//		// chatClientThread 에서 서버로 부터 받은 메세지가 있다고 치고
+//
+//		updateTextArea(userName + ": " + message);
+//
+//	}
 
 	private void updateTextArea(String message) {
 		textArea.append(message);
@@ -178,14 +177,11 @@ public class ChatWindow {
 	}
 
 	private class ChatClientThread extends Thread {
-		private String user_Name;
-		private String room_Name;
 		private BufferedReader br;
-		List<Writer> listWriters;
+		private String user_Name;
 
-		public ChatClientThread(BufferedReader br, String room_Name, String user_Name) {
+		public ChatClientThread(BufferedReader br, String user_Name) {
 			this.br = br;
-			this.room_Name = room_Name;
 			this.user_Name = user_Name;
 		}
 
@@ -199,7 +195,7 @@ public class ChatWindow {
 					
 					String[] tokens = message.split(":");
 					
-					if(tokens[0].equals(userName)){
+					if(tokens[0].equals(user_Name)){
 						// 자기 채팅창에는 자기가 보낸 메시지 출력안하기.
 					}
 					else if("join".equals(tokens[0])) { // 채팅방 입장 메시지.
