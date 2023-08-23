@@ -146,9 +146,12 @@ public class ChatWindow {
 			textField.requestFocus();
 
 			// ChatClientThread에서 서버로부터 은 메시지가 있다고 생각.
-
-			updateTextArea("<<"+message);
-			pw.println(userName+":"+message);
+			
+			if(!"".equals(message)) { // 아무것도 안보내면 출력 x
+				updateTextArea("<<"+message);
+				pw.println(userName+":"+message);
+			}
+			
 		}
 		
 		

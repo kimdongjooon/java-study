@@ -43,6 +43,7 @@ public class ChatServerAppThread extends Thread {
 					// 클라이언트로부터 연결 끊김.
 					if(request == null) {
 						log("클라이언트로부터 연결 끊김.");
+						break;
 					}
 					
 					// 요청 데이터 처리. - join 처리.
