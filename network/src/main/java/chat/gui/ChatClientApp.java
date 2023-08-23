@@ -29,54 +29,14 @@ public class ChatClientApp {
 			
 			System.out.println("대화명은 한글자 이상 입력해야 합니다.\n");
 		}
+		
 		System.out.print("닉네임을 입력하세요 : ");
 		userName =scanner.nextLine();
-		
 		scanner.close();
-		String line = "JOIN:OK";
-		System.out.println("여긴가. "+line);
-		if("JOIN:OK".equals(line)) {
-			new ChatWindow(name,userName).show();
-		}
-//		try {
-//			// 1. create socket
-//			socket = new Socket();
-//			
-//			// 2. connect server			
-//			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
-//			
-//			// 3. writer/ reader 생성	
-//			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
-//			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
-//			
-//			// 4. join protocol 진행
-//			pw.println("join:"+name);
-//			pw.flush();
-//			
-//			// 5. server와의 첫번째3 통신확인. 
-//			String line = "JOIN:OK";
-//			System.out.println("여긴가. "+line);
-//			if("JOIN:OK".equals(line)) {
-//				new ChatWindow(name).show();
-//			}
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if( socket !=null && socket.isClosed()) {
-//				try {
-//					socket.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
-//		}
 		
+		// 스레드 실행.
+		new ChatWindow(name,userName).show();
 		
-	
-		 
-
 		
 	}
 

@@ -29,6 +29,7 @@ public class ChatWindow {
 	private static final String SERVER_IP = "127.0.0.1";
 	private static final int PORT = 8808;
 	PrintWriter pw = null;
+	BufferedReader br = null;
 	
 	private Frame frame;
 	private String roomName;
@@ -59,9 +60,6 @@ public class ChatWindow {
 			public void actionPerformed(ActionEvent actionEvent) { 
 				// 내 채팅창에 띄우기.
 				sendMessage(); 
-				// 상대 채팅창에 띄우기.
-//				sendMessage(name);
-				
 			}
 		});
 
@@ -112,10 +110,8 @@ public class ChatWindow {
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
 
 			// 3. IO스트림.
-			BufferedReader br = new BufferedReader(
-					new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),
-					true);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),true);
 
 			// ChatClientThread 생성하고 실행.
 			pw.println("join:"+userName);
@@ -142,19 +138,20 @@ public class ChatWindow {
 		String message = textField.getText();
 		// 종료 
 		if("quit".equals(message)) {
-			pw.println("quit");
 			finish();
+		}else {
+			System.out.println("메세지를 보내는 프로토콜 구현: " + message);
+
+			textField.setText("");
+			textField.requestFocus();
+
+			// ChatClientThread에서 서버로부터 은 메시지가 있다고 생각.
+
+			updateTextArea("<<"+message);
+			pw.println(userName+":"+message);
 		}
 		
-		System.out.println("메세지를 보내는 프로토콜 구현: " + message);
-
-		textField.setText("");
-		textField.requestFocus();
-
-		// ChatClientThread에서 서버로부터 은 메시지가 있다고 생각.
-
-		updateTextArea("<<"+message);
-		pw.println(userName+":"+message);
+		
 
 	}
 
@@ -191,7 +188,6 @@ public class ChatWindow {
 
 		@Override
 		public void run() {
-			// 상대방 채팅 내용 처리
 			try {
 				
 				while(true) {
@@ -200,25 +196,16 @@ public class ChatWindow {
 					
 					String[] tokens = message.split(":");
 					
-					if(tokens[0].equals(userName)){// 자기 채팅창에는 자기가 보낸 메시지 출력안하기.
-						
+					if(tokens[0].equals(userName)){
+						// 자기 채팅창에는 자기가 보낸 메시지 출력안하기.
 					}
-					else if("join".equals(tokens[0])) {
+					else if("join".equals(tokens[0])) { // 채팅방 입장 메시지.
 						textArea.append(tokens[1]+"\n");
 					}
-					
 					else { // 상대방의 채팅 메시지 일때.
 						textArea.append(message+"\n");
-//						textField.setText(message);
-							
 					}
-					
-					
-					
-					
-					
-	
-					
+										
 				}
 				
 

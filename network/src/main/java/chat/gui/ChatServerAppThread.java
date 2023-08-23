@@ -68,7 +68,7 @@ public class ChatServerAppThread extends Thread {
 				
 				e.printStackTrace();
 			} catch (NullPointerException e) {
-				e.printStackTrace();
+				log("error: "+e);
 			}
 		
 		}
