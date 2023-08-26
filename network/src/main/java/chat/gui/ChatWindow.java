@@ -18,20 +18,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class ChatWindow {
 	private static final String SERVER_IP = "127.0.0.1";
 	private static final int PORT = 8808;
+	Socket socket = null;
 	PrintWriter pw = null;
 	BufferedReader br = null;
 	
 	private Frame frame;
-	private String roomName;
 	private String userName;
 	private Panel pannel;
 	private Button buttonSend;
@@ -44,7 +42,6 @@ public class ChatWindow {
 		buttonSend = new Button("Send");
 		textField = new TextField();
 		textArea = new TextArea(30, 80);
-		this.roomName = name;
 		this.userName = userName;
 		
 	}
@@ -92,7 +89,6 @@ public class ChatWindow {
 		// Frame
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
 				finish();
 			}
 
@@ -103,7 +99,7 @@ public class ChatWindow {
 		// IOStream 받아오기
 		try {
 			// 1. 소켓 생성.
-			Socket socket = new Socket();
+			socket = new Socket();
 			
 			// 2. connect
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
@@ -115,12 +111,21 @@ public class ChatWindow {
 			// ChatClientThread 생성하고 실행.
 			pw.println("join:"+userName);
 		
-//			String name = br.readLine();
+			
 			new ChatClientThread(br, userName).start();
 
 		} catch (IOException e1) {
 
 			e1.printStackTrace();
+		} finally {
+			try {
+				if(socket !=null && socket.isClosed()) {
+					socket.close();					
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -156,19 +161,6 @@ public class ChatWindow {
 		
 
 	}
-
-//	private void sendMessage(String roomName) { // 빈 문자는 보내지말기.
-//		String message = textField.getText();
-//		System.out.println("메세지를 보내는 프로토콜 구현: " + message);
-//
-//		textField.setText("");
-//		textField.requestFocus();
-//
-//		// chatClientThread 에서 서버로 부터 받은 메세지가 있다고 치고
-//
-//		updateTextArea(userName + ": " + message);
-//
-//	}
 
 	private void updateTextArea(String message) {
 		textArea.append(message);
