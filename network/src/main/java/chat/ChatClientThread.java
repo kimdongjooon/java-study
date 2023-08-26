@@ -2,10 +2,10 @@ package chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 import java.io.Writer;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
+//import java.net.Socket;
+//import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class ChatClientThread extends Thread {

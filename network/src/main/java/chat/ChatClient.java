@@ -72,6 +72,13 @@ public class ChatClient {
 		} finally {
 			// 10. 자원정리 
 			scanner.close();
+			try {
+				if (socket != null && socket.isClosed()) {
+					socket.close();
+				}
+			} catch (IOException e) {
+				log("error :"+e);
+			}
 		}
 
 	}
