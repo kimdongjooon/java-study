@@ -8,6 +8,7 @@ import java.net.Socket;
 
 
 public class EchoServer {
+	private static final String SERVER_IP = "192.168.0.128";
 	public static final int PORT = 8888;
 
 	public static void main(String[] args) {
@@ -15,8 +16,8 @@ public class EchoServer {
 		try {
 			serverSocket = new ServerSocket();
 
-			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 10);
-			log("start server PORT:" + PORT);
+			serverSocket.bind(new InetSocketAddress(SERVER_IP, PORT), 10);
+			log("start server PORT:" + new InetSocketAddress(SERVER_IP, PORT));
 
 			while (true) {
 				Socket socket = serverSocket.accept();

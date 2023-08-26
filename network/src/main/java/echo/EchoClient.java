@@ -12,7 +12,8 @@ import java.util.Scanner;
 
 public class EchoClient {
 	
-	private static final String SERVER_IP = "192.168.0.148";
+	private static final String SERVER_IP = "192.168.0.128";
+	public static final int PORT = 8888;
 	
 	public static void main(String[] args) {
 		Socket socket = null;
@@ -23,7 +24,7 @@ public class EchoClient {
 			socket = new Socket();
 			
 			// 2. 서버 연결.			
-			socket.connect(new InetSocketAddress(SERVER_IP,8002));
+			socket.connect(new InetSocketAddress(SERVER_IP,PORT));
 			log("connected");
 			
 			// 3. io stream 받아오기
